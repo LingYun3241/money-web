@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>个人支出记账</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="/static/app.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <h1>个人支出记账</h1>
+      <p class="subtitle">本地记录日常支出，按六个固定分类统计。</p>
+    </div>
+  </header>
+
+  <div class="container">
+    <p id="status-message" class="status-message" role="status" aria-live="polite" hidden></p>
+  </div>
+
+  <main class="container layout">
+    <section class="panel" aria-labelledby="form-title">
+      <h2 id="form-title">添加账目</h2>
+      <form id="record-form" class="record-form">
+        <div class="field">
+          <label for="amount">金额（元）</label>
+          <input id="amount" name="amount" type="number" inputmode="decimal"
+                 min="0.01" step="0.01" placeholder="例如 12.50" required>
+        </div>
+
+        <div class="field">
+          <label for="category">分类</label>
+          <select id="category" name="category" required>
+            <option value="" selected disabled>请选择分类</option>
+            <option value="餐饮">餐饮</option>
+            <option value="交通">交通</option>
+            <option value="购物">购物</option>
+            <option value="娱乐">娱乐</option>
+            <option value="居住">居住</option>
+            <option value="其它">其它</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="record_date">日期</label>
+          <input id="record_date" name="record_date" type="date" required>
+        </div>
+
+        <div class="field">
+          <label for="note">备注（可选，最多 255 字）</label>
+          <textarea id="note" name="note" rows="3" maxlength="255"
+                    placeholder="例如：午饭"></textarea>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="button-primary">添加账目</button>
+          <p id="form-message" class="form-message" role="status" aria-live="polite"></p>
+        </div>
+      </form>
+    </section>
+
+    <section class="panel" aria-labelledby="list-title">
+      <div class="panel-heading">
+        <h2 id="list-title">账目列表</h2>
+        <span class="badge">实时数据</span>
+      </div>
+      <ul id="records-list" class="record-list" aria-live="polite"></ul>
+    </section>
+
+    <section class="panel" aria-labelledby="stats-title">
+      <div class="panel-heading">
+        <h2 id="stats-title">分类统计</h2>
+        <span class="badge">实时数据</span>
+      </div>
+
+      <div class="stats-summary">
+        <div class="stat-block">
+          <span class="stat-label">总支出</span>
+          <strong class="stat-value" id="total-amount">—</strong>
+        </div>
+        <div class="stat-block">
+          <span class="stat-label">总笔数</span>
+          <strong class="stat-value" id="total-count">—</strong>
+        </div>
+      </div>
+
+      <ul id="category-grid" class="category-grid">
+        <li class="category-card" data-category="餐饮"><span>餐饮</span><strong class="category-amount">—</strong></li>
+        <li class="category-card" data-category="交通"><span>交通</span><strong class="category-amount">—</strong></li>
+        <li class="category-card" data-category="购物"><span>购物</span><strong class="category-amount">—</strong></li>
+        <li class="category-card" data-category="娱乐"><span>娱乐</span><strong class="category-amount">—</strong></li>
+        <li class="category-card" data-category="居住"><span>居住</span><strong class="category-amount">—</strong></li>
+        <li class="category-card" data-category="其它"><span>其它</span><strong class="category-amount">—</strong></li>
+      </ul>
+
+      <p id="stats-message" class="form-message" role="status" aria-live="polite"></p>
+    </section>
+  </main>
+
+  <dialog id="confirm-dialog" class="confirm-dialog" aria-labelledby="confirm-title">
+    <form method="dialog" class="confirm-form">
+      <h2 id="confirm-title">确认删除</h2>
+      <p id="confirm-text" class="confirm-text"></p>
+      <div class="confirm-actions">
+        <button value="cancel" class="button-secondary" autofocus>取消</button>
+        <button value="confirm" class="button-danger">确认删除</button>
+      </div>
+    </form>
+  </dialog>
+
+  <footer class="site-footer">
+    <div class="container">本地运行 · 原生 HTML / CSS / JavaScript</div>
+  </footer>
+</body>
+</html>
